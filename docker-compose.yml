@@ -1,0 +1,30 @@
+services:
+  benchmark-postgres:
+    image: postgis/postgis:16-3.4
+    container_name: benchmark_postgres
+    volumes:
+      - benchmark_pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DATABASE: test_database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+  benchmark-mysql:
+    image: mysql:8.2.0
+    container_name: mysql_host
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: test_database
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - benchmark_mydata:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+volumes:
+  benchmark_pgdata:
+  benchmark_mydata:
